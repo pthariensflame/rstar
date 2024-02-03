@@ -1,4 +1,4 @@
-use crate::point::{max_inline, Point, PointExt};
+use crate::point::{max_inline, Point, PointExt, RTreeNum};
 use crate::{Envelope, RTreeObject};
 use num_traits::{Bounded, One, Zero};
 
@@ -175,8 +175,7 @@ where
     }
 
     fn center(&self) -> Self::Point {
-        let one = <Self::Point as Point>::Scalar::one();
-        let two = one + one;
+        let two = <<Self::Point as Point>::Scalar as RTreeNum>::two();
         self.lower.component_wise(&self.upper, |x, y| (x + y) / two)
     }
 

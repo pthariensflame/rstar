@@ -95,9 +95,21 @@ use num_traits::{Bounded, Num, Signed, Zero};
 /// #
 /// ```
 ///
-pub trait RTreeNum: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
+pub trait RTreeNum: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {
+    /// The integer value 2.
+    fn two() -> Self;
+}
 
-impl<S> RTreeNum for S where S: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
+impl<S> RTreeNum for S
+where
+    S: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug,
+{
+    #[inline]
+    pub fn two() -> S {
+        let one = S::one();
+        one + one
+    }
+}
 
 /// Defines a point type that is compatible with rstar.
 ///

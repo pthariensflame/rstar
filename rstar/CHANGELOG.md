@@ -1,3 +1,8 @@
+# Unreleased
+
+# Added
+- Added the utility method `two` to `RTreeNum`, to get the scalar value 2.
+
 # 0.12.0
 
 ## Added
