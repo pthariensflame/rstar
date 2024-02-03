@@ -1,5 +1,5 @@
 use core::fmt::Debug;
-use num_traits::{Bounded, Num, Signed, Zero};
+use num_traits::{Bounded, NumAssignRef, NumRef, Signed, Zero};
 
 /// Defines a number type that is compatible with rstar.
 ///
@@ -88,24 +88,91 @@ use num_traits::{Bounded, Num, Signed, Zero};
 /// #   fn rem(self, rhs: Self) -> Self { unimplemented!() }
 /// # }
 /// #
+/// # impl<'a> core::ops::Mul<&'a Self> for MyFancyNumberType {
+/// #   type Output = Self;
+/// #   fn mul(self, rhs: &'a Self) -> Self { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::Add<&'a Self> for MyFancyNumberType {
+/// #   type Output = Self;
+/// #   fn add(self, rhs: &'a Self) -> Self { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::Sub<&'a Self> for MyFancyNumberType {
+/// #   type Output = Self;
+/// #   fn sub(self, rhs: &'a Self) -> Self { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::Div<&'a Self> for MyFancyNumberType {
+/// #   type Output = Self;
+/// #   fn div(self, rhs: &'a Self) -> Self { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::Rem<&'a Self> for MyFancyNumberType {
+/// #   type Output = Self;
+/// #   fn rem(self, rhs: &'a Self) -> Self { unimplemented!() }
+/// # }
+/// #
 /// # impl core::ops::Neg for MyFancyNumberType {
 /// #   type Output = Self;
 /// #   fn neg(self) -> Self { unimplemented!() }
 /// # }
 /// #
+/// # impl core::ops::MulAssign for MyFancyNumberType {
+/// #   fn mul_assign(&mut self, rhs: Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl core::ops::AddAssign for MyFancyNumberType {
+/// #   fn add_assign(&mut self, rhs: Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl core::ops::SubAssign for MyFancyNumberType {
+/// #   fn sub_assign(&mut self, rhs: Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl core::ops::DivAssign for MyFancyNumberType {
+/// #   fn div_assign(&mut self, rhs: Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl core::ops::RemAssign for MyFancyNumberType {
+/// #   fn rem_assign(&mut self, rhs: Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::MulAssign<&'a Self> for MyFancyNumberType {
+/// #   fn mul_assign(&mut self, rhs: &'a Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::AddAssign<&'a Self> for MyFancyNumberType {
+/// #   fn add_assign(&mut self, rhs: &'a Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::SubAssign<&'a Self> for MyFancyNumberType {
+/// #   fn sub_assign(&mut self, rhs: &'a Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::DivAssign<&'a Self> for MyFancyNumberType {
+/// #   fn div_assign(&mut self, rhs: &'a Self) { unimplemented!() }
+/// # }
+/// #
+/// # impl<'a> core::ops::RemAssign<&'a Self> for MyFancyNumberType {
+/// #   fn rem_assign(&mut self, rhs: &'a Self) { unimplemented!() }
+/// # }
+/// #
 /// ```
 ///
-pub trait RTreeNum: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {
+pub trait RTreeNum:
+    Bounded + NumRef + NumAssignRef + Clone + Copy + Signed + PartialOrd + Debug
+{
     /// The integer value 2.
     fn two() -> Self;
 }
 
 impl<S> RTreeNum for S
 where
-    S: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug,
+    S: Bounded + NumRef + NumAssignRef + Clone + Copy + Signed + PartialOrd + Debug,
 {
     #[inline]
-    pub fn two() -> S {
+    fn two() -> S {
         let one = S::one();
         one + one
     }

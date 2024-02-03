@@ -2,6 +2,12 @@
 
 # Added
 - Added the utility method `two` to `RTreeNum`, to get the scalar value 2.
+- The `RTreeNum` trait now requires `Num{Assign,}Ref` rather than just `Num`;
+  this doesn't affect anyone who isn't implementing a custom `RTreeNum` type,
+  and conforming to the new requirement is trivial for those who are: just implement
+  the `std::ops::{Add,Sub,Mul,Div,Rem}{Assign,}` traits for both values of and
+  shared references to your type, delegating to the non-`Assign` and/or non-refererence
+  versions if nothing more efficient is doable.
 
 # 0.12.0
 
